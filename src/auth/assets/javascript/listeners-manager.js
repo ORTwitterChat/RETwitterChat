@@ -1,8 +1,7 @@
 import { storageManager_get, storageManager_add } from "../../../assets/javascript/storage-manger.js";
 import { status_add } from "../../../assets/javascript/application-status-manager.js";
-import { idGenerator } from "../../../assets/javascript/unique-identifier.js";
 import { application } from "../../../assets/javascript/application.js";
-import { newDate } from "../../../assets/javascript/methods.js";
+import { User } from "./user.js";
 
 /**
  * This function managing user signup
@@ -43,12 +42,7 @@ export function listener_signup(e){
     }
     
     // 3) Add new user to local-storage
-    const newUser = {
-        username: user.name,
-        password: user.password,
-        id: idGenerator(),
-        date: newDate()
-    }
+    const newUser = new User(user.name, user.password)
     // Set Application Status
     status_add(newUser.username, application.status.value.operation.signup.success, application.status.value.location.loginSignup)
     // Add data to local-storage
@@ -64,7 +58,7 @@ export function listener_signup(e){
     setTimeout(() => {
         // Set Application Status
         status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.postManager)
-        window.location.href = '/src/post/'
+        window.location.href = './../../src/post/'
 
     }, 2000)
     return
@@ -104,7 +98,7 @@ export function listener_login(e){
                 setTimeout(() => {
                     // Set Application Status
                     status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.postManager)
-                    window.location.href = '/src/post/'
+                    window.location.href = './../../src/post/'
             
                 }, 2000)
                 return
