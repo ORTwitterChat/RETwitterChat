@@ -18,5 +18,4 @@ export function render_logInSignUp(){
     // 3) Add Listeners
     document.getElementById(application.section.logInSignUp.elements.form.signup.id).addEventListener('submit', listener_signup);
     document.getElementById(application.section.logInSignUp.elements.form.login.id).addEventListener('submit', listener_login);
-
 }

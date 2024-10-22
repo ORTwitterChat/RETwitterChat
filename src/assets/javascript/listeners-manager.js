@@ -2,12 +2,17 @@ import { render_logInSignUp } from "./render.js";
 import { application } from './application.js';
 import { storageManager_get, storageManager_add } from "./storage-manger.js";
 import { idGenerator } from "./unique-identifier.js";
+import { newDate } from "./methods.js";
+import { status_add } from "./application-status-manager.js";
 
 /**
  * This function load and rendering first-page: login and signup
  */
 export function listener_documentLoad(){
+    //TODO if status ...
+
     // 1) Redirect to login-page
+    status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.loginSignup)
     render_logInSignUp()
 
 }
@@ -35,6 +40,8 @@ export function listener_signup(e){
     let users = storageManager_get(application.section.logInSignUp.ls.name)
     for (let i = 0; i < users.length; i++) {
         if (users[i].username === user.name){
+            // Set Application Status
+            status_add(application.status.now.name, application.status.value.operation.signup.usernameExist, application.status.value.location.loginSignup)
             // Show the message to the user
             silverBox({
                 alertIcon: "error",
@@ -45,25 +52,19 @@ export function listener_signup(e){
                 }
             })
             return
-            
         }
     }
     
     // 3) Add new user to local-storage
-    const date = new Date()
     const newUser = {
         username: user.name,
         password: user.password,
         id: idGenerator(),
-        date: {
-            year: date.getFullYear(),
-            month: date.getMonth(),
-            day: date.getDate(),
-            hour: date.getHours(),
-            minute: date.getMinutes(),
-            second: date.getSeconds()
-        }
+        date: newDate()
     }
+    // Set Application Status
+    status_add(newUser.username, application.status.value.operation.signup.success, application.status.value.location.loginSignup)
+    // Add data to local-storage
     storageManager_add(application.section.logInSignUp.ls.name, newUser)
     // Show message to user
     silverBox({
@@ -75,7 +76,6 @@ export function listener_signup(e){
     })
 
     //TODO render_postMenu()
-    setTimeout(() => { document.body.innerHTML = ''; }, 2000);
 }
 
 /**
@@ -100,6 +100,8 @@ export function listener_login(e){
     for (let i = 0; i < users.length; i++) {
         if (users[i].username === user.name){
             if (users[i].password === user.password){
+                // Set Application Status
+                status_add(user.name, application.status.value.operation.login.success, application.status.value.location.loginSignup)
                 // Show message to user
                 silverBox({
                     title: {
@@ -108,15 +110,17 @@ export function listener_login(e){
                     },
                     text: "🟢 You have successfully login the site. 🟢"
                 })
-                //TODO -) render_postMenu()
+                //TODO Render next page: Post Menu
                 return
 
             // Enter the wrong password
             } else{
+                // Set Application Status
+                status_add(application.status.now.user, application.status.value.operation.login.wrongPassword, application.status.value.location.loginSignup)
                 // Show the message to the user
                 silverBox({
                     alertIcon: "error",
-                    text: "⛔ Invalid password ⛔",
+                    text: "⛔ Wrong password ⛔",
                     centerContent: true,
                     cancelButton: {
                         text: "OK"
@@ -127,6 +131,8 @@ export function listener_login(e){
     }
 
     // 3) If Username don't exist
+    // Set Application Status
+    status_add(application.status.now.user, application.status.value.operation.login.userNotExist, application.status.value.location.loginSignup)
     // Show the message to the user
     silverBox({
         alertIcon: "error",

@@ -1,4 +1,43 @@
-export const application = {
+export let application = {
+    status:{
+        value:{
+            operation:{
+                redirect: 'redirecting-to-another-page',
+                start: 'application-stating',
+                refreshPage: 'refreshing-page',
+                signup: {
+                    usernameExist: 'signup-user-is_exist',
+                    success: 'signup-user-success'
+        
+                },
+                login:{
+                    wrongPassword: 'login-user-wrong_password',
+                    userNotExist: 'login-user-username_not_exist',
+                    success: 'login-user-success'
+                    
+                }
+            },
+            location:{
+                loginSignup: 'login-signup',
+                root: '/'
+        
+            },
+            user: {
+                name: 'anonymous-user',
+        
+            },
+        },
+        now: {
+            user: 'anonymous-user',
+            location: '/',
+            operation: 'init'
+
+        },
+        ls: {
+            name: 'DB_application-status'
+
+        }
+    },
     css: {
         id: 'main-css-file-manager'
         
@@ -33,6 +72,6 @@ export const application = {
 
             }
             
-        }
+        },
     }
 }
