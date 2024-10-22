@@ -64,7 +64,7 @@ export function listener_signup(e){
     setTimeout(() => {
         // Set Application Status
         status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.postManager)
-        window.location.href = '/src/post/'
+        window.location.href = './../../src/post/'
 
     }, 2000)
     return
@@ -104,7 +104,7 @@ export function listener_login(e){
                 setTimeout(() => {
                     // Set Application Status
                     status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.postManager)
-                    window.location.href = '/src/post/'
+                    window.location.href = './../../src/post/'
             
                 }, 2000)
                 return
