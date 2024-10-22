@@ -1,21 +1,8 @@
-import { render_logInSignUp } from "./render.js";
-import { application } from './application.js';
-import { storageManager_get, storageManager_add } from "./storage-manger.js";
-import { idGenerator } from "./unique-identifier.js";
-import { newDate } from "./methods.js";
-import { status_add } from "./application-status-manager.js";
-
-/**
- * This function load and rendering first-page: login and signup
- */
-export function listener_documentLoad(){
-    //TODO if status ...
-
-    // 1) Redirect to login-page
-    status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.loginSignup)
-    render_logInSignUp()
-
-}
+import { storageManager_get, storageManager_add } from "../../../assets/javascript/storage-manger.js";
+import { status_add } from "../../../assets/javascript/application-status-manager.js";
+import { idGenerator } from "../../../assets/javascript/unique-identifier.js";
+import { application } from "../../../assets/javascript/application.js";
+import { newDate } from "../../../assets/javascript/methods.js";
 
 /**
  * This function managing user signup
@@ -28,8 +15,8 @@ export function listener_signup(e){
 
     // 1) Get User inputs
     const user = {
-        name: document.getElementById(application.section.logInSignUp.elements.input.signupUsername.id).value,
-        password: document.getElementById(application.section.logInSignUp.elements.input.signupPassword.id).value
+        name: document.getElementById('input-signup-username').value,
+        password: document.getElementById('input-signup-password').value
 
     }
 
@@ -41,7 +28,7 @@ export function listener_signup(e){
     for (let i = 0; i < users.length; i++) {
         if (users[i].username === user.name){
             // Set Application Status
-            status_add(application.status.now.name, application.status.value.operation.signup.usernameExist, application.status.value.location.loginSignup)
+            status_add(application.status.now.user, application.status.value.operation.signup.usernameExist, application.status.value.location.loginSignup)
             // Show the message to the user
             silverBox({
                 alertIcon: "error",
@@ -74,8 +61,14 @@ export function listener_signup(e){
         },
         text: "🟢 Your registration was successful. 🟢"
     })
+    setTimeout(() => {
+        // Set Application Status
+        status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.postManager)
+        window.location.href = '/src/post/'
 
-    //TODO render_postMenu()
+    }, 2000)
+    return
+
 }
 
 /**
@@ -87,14 +80,11 @@ export function listener_login(e){
     e.preventDefault()
 
     const user = {
-        name: document.getElementById(application.section.logInSignUp.elements.input.loginUsername.id).value,
-        password: document.getElementById(application.section.logInSignUp.elements.input.loginPassword.id).value
+        name: document.getElementById('input-login-username').value,
+        password: document.getElementById('input-login-password').value
 
     }
 
-    //TODO -) Validation
-    // code ...
-    
     // 2) Check for >>> Is Username exist
     let users = storageManager_get(application.section.logInSignUp.ls.name)
     for (let i = 0; i < users.length; i++) {
@@ -111,6 +101,12 @@ export function listener_login(e){
                     text: "🟢 You have successfully login the site. 🟢"
                 })
                 //TODO Render next page: Post Menu
+                setTimeout(() => {
+                    // Set Application Status
+                    status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.postManager)
+                    window.location.href = '/src/post/'
+            
+                }, 2000)
                 return
 
             // Enter the wrong password
@@ -126,6 +122,7 @@ export function listener_login(e){
                         text: "OK"
                     }
                 })
+                return
             }
         }
     }
@@ -142,4 +139,5 @@ export function listener_login(e){
             text: "OK"
         }
     })
+    return
 }

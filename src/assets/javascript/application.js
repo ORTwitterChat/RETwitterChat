@@ -15,15 +15,20 @@ export let application = {
                     userNotExist: 'login-user-username_not_exist',
                     success: 'login-user-success'
                     
+                },
+                accessTo: {
+                    forbidden: 'access-to-forbidden-page'
+                    
                 }
             },
             location:{
                 loginSignup: 'login-signup',
-                root: '/'
+                root: '/',
+                postManager: 'post-manager'
         
             },
             user: {
-                name: 'anonymous-user',
+                anonymous: 'anonymous-user',
         
             },
         },
@@ -38,40 +43,12 @@ export let application = {
 
         }
     },
-    css: {
-        id: 'main-css-file-manager'
-        
-    },
     section: {
         logInSignUp: {
-            css: {
-                filePath: './assets/style/log_in-sign_up.css'
-
-            },
-            elements: {
-                input: {
-                    loginUsername: {id: 'input-login-username'},
-                    loginPassword: {id: 'input-login-password'},
-                    signupUsername: {id: 'input-signup-username'},
-                    signupPassword: {id: 'input-signup-password'}
-
-                },
-                form: {
-                    login: {id: 'form-login'},
-                    signup: {id: 'form-signup'}
-
-                }
-            },
             ls: {
                 name: 'DB_Users'
 
             },
-            regex: {
-                user: new RegExp('/^[a-zA-Z0-9]{1, 50}$/'),
-                password: new RegExp('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/')
-
-            }
-            
         },
     }
 }
