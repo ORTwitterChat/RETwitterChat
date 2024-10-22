@@ -42,6 +42,7 @@ export function isUserLogin(){
     ) { redirectUserToAuthPage(); return }
 
     // If all thing ok
+    application.status.now.name = loginLogs.successLogin.user;
     return
 }
 

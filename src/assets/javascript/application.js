@@ -50,5 +50,11 @@ export let application = {
 
             },
         },
+        postManager: {
+            ls: {
+                name: 'DB_Posts'
+                
+            }
+        }
     }
 }
