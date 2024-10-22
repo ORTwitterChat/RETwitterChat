@@ -60,7 +60,7 @@ function redirectUserToAuthPage(){
     setTimeout(() => {
         // Set Application Status
         status_add(application.status.now.user, application.status.value.operation.redirect, application.status.value.location.postManager)
-        window.location.href = './../../src/post/'
+        window.location.href = './../../src/auth/'
 
     }, 2000)
 }
